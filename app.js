@@ -55,6 +55,38 @@ function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min; //The maximum is exclusive and the minimum is inclusive
 }
 
+function getRandomMultiple(max, factor){
+  var random = Math.random() * (max - factor + 1) + factor;
+  return random - (random % factor);
+}
+
+//FIX: only get random number within set of multiples of answer? to lower resource usage?
+function getDivisionProblem(answer){
+  console.log('--------answer: ' + answer);
+
+if (answer == 0){
+      return 0 + ops.divide + getRandomInt(1,60);
+    }
+
+    var b = getRandomMultiple(60, answer);
+    var a = b / answer;
+    //var problem = '';
+
+    
+//while (b % a != 0) {
+// if (b / a == answer) {
+//             console.log('found answer');
+//             problem = b + ops.divide + a;
+//             break; // FIX: Are breaks the only way to avoid undefined returns?
+//         }
+//             console.log('not a divisor: ' + a);
+//             b = getRandomInt(answer*2, 60);
+// }
+
+    return b + ops.divide + a; 
+}
+
+
 // FIX: There's probably a less resource-intensive way to do this
 // Get a random int from an array of 60 or 24 numbers and remove that int if it
 // doesn't satisfy the function?
@@ -113,4 +145,14 @@ function testMultiplication(){
 }
 }
 
+function testDivision(){
+  for (var i = 0; i < 10; i++) {
+    console.log('---------------outer loop');
+    var li = document.createElement("li");
+    li.innerText = '[' + i + '] ' + getDivisionProblem(i);
+    document.getElementById("division").appendChild(li);
+}
+}
+
+testDivision();
 //testMultiplication();
