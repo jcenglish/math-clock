@@ -1,0 +1,49 @@
+@import url("https://fonts.googleapis.com/css?family=Codystar");
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 100%;
+}
+
+body {
+    background-color: black;
+    color: white;
+    font-family: "Codystar";
+}
+
+#clock {
+    display: table;
+    width: 90%;
+    border: 5px outset silver;
+}
+
+.row {
+    display: table-row;
+}
+
+.row span {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#problem-hr,
+#problem-min {
+    font-size: 3rem;
+    text-align: right;
+    padding-right: 1rem;
+}
+
+.label {
+    font-weight: bold;
+    font-size: 1rem;
+    text-align: left;
+}
+
+#testPanel {
+    font-family: monospace;
+    font-size: 2rem;
+}
