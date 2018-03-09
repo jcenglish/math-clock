@@ -33,6 +33,12 @@ const OPS = {
 const PRIMES = [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59 ];
 
 //var difficulty;
+//var includeNegatives;
+//var includeFractions;
+//var includeDecimals;
+//var includeAbsValue;
+//var includeIdentityProps;
+//var includeInverseProps;
 
 //-----------------------------------------------------------------------
 // UTILITY FUNCTIONS
@@ -138,6 +144,47 @@ function getMultiplicationProblem(answer) {
     console.log("b: " + b);
     console.log("a: " + a);
     return b + OPS.times + a;
+}
+
+function getAdditionProblem(answer){
+  if (answer == 0){
+    return 0 + OPS.plus + 0; //FIX: Maybe make easy problems like this optional
+  }
+
+  if (answer == 1){
+    return 1 + OPS.plus + 0;
+  }
+
+  var a = getRandomInt(0,answer);
+  var b = answer - a;
+
+  return a + OPS.plus + b;
+}
+
+function getSubtractionProblem(answer){
+  if (answer == 0){
+    var number = getRandomInt(0,60)
+    return number + OPS.minus + number;
+  }
+
+  if (answer == 1){
+    var a = getRandomInt(1,60);
+    var b = a - 1;
+    return a + OPS.minus + b;
+  }
+
+  var a = getRandomInt(0,answer);
+  var b = answer + a;
+
+  return b + OPS.minus + a;
+}
+
+function getExponentProblem(){
+
+}
+
+function getSquareRootProblem(){
+
 }
 
 //-----------------------------------------------------------------------
