@@ -32,7 +32,16 @@ const OPS = {
 
 const PRIMES = [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59 ];
 
+var opsFunctions = [
+  getDivisionProblem,
+  getMultiplicationProblem,
+  getSubtractionProblem,
+  getAdditionProblem
+];
+
 //var difficulty;
+//var problemRate;
+//var militaryTime = true;
 //var includeNegatives;
 //var includeFractions;
 //var includeDecimals;
@@ -187,19 +196,32 @@ function getSquareRootProblem(){
 
 }
 
+function getRandomProblem(answer){
+  var index = getRandomInt(0,opsFunctions.length);
+
+  return opsFunctions[index](answer);
+}
+
 //-----------------------------------------------------------------------
 // CLOCK FUNCTIONS, CONSTANTS AND VARIABLES
 //-----------------------------------------------------------------------
 
 function startClock() {
     var time = new Date();
-    // The actual time
-    document.getElementById("problem-hr").innerHTML = time.getHours();
-    document.getElementById("problem-min").innerHTML = time.getMinutes();
-    setTimeout(startClock, 500);
+    var minutes = time.getMinutes();
+    var hours = time.getHours();
+    document.getElementById("problem-hr").innerHTML = getRandomProblem(hours);
+    document.getElementById("problem-min").innerHTML = getRandomProblem(minutes);
+
+    setInterval(function(){
+      if (time.getMinutes() != minutes){
+        document.getElementById("problem-hr").innerHTML = getRandomProblem(hours);
+        document.getElementById("problem-min").innerHTML = getRandomProblem(minutes);
+      }
+    }, 500);
 }
 
-//startClock();
+startClock();
 
 //-----------------------------------------------------------------------
 // TESTS

@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Codystar");
+@import url("https://fonts.googleapis.com/css?family=Pangolin");
 * {
     margin: 0;
     padding: 0;
@@ -12,34 +12,37 @@ html {
 body {
     background-color: black;
     color: white;
-    font-family: "Codystar";
+    font-family: "Pangolin";
 }
 
 #clock {
     display: table;
     width: 90%;
-    border: 5px outset silver;
+    border: 15px outset brown;
+    margin: 0 auto;
+    background-color: #3B653D;
 }
 
 .row {
-    display: table-row;
+    display: block;
+    text-align: center;
 }
 
 .row span {
-    display: table-cell;
+    display: inline;
     vertical-align: middle;
 }
 
 #problem-hr,
 #problem-min {
-    font-size: 3rem;
+    font-size: 7rem;
     text-align: right;
     padding-right: 1rem;
 }
 
 .label {
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 4rem;
     text-align: left;
 }
 
