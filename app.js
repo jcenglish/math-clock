@@ -62,15 +62,28 @@ function getRandomFactor(number){
   var pFactors = [];
   var product = 1
   var i = 0;
-  var currentNumber = number;
+  var currentFactor = number;
+  var test = 0;
 
   while (product != number){
-    if (number % PRIMES[i] == 0){
+    console.log('---------BEFORE IF');
+    console.log('current prime: ' + PRIMES[i]);
+    console.log('current prime index: ' + i);
+    console.log("prime factors: " + pFactors);
+    console.log("current factor: " + currentFactor);
+    console.log('product: ' + product);
+    if (currentFactor % PRIMES[i] == 0){
       pFactors.push(PRIMES[i]);
-      currentNumber = number / PRIMES[i];
+      currentFactor = currentFactor / PRIMES[i];
       product *= PRIMES[i];
-      i = 0;
+      i = -1;
     }
+    console.log('---------AFTER IF');
+    console.log('current prime: ' + PRIMES[i]);
+    console.log('current prime index: ' + i);
+    console.log("prime factors: " + pFactors);
+    console.log("current factor: " + currentFactor);
+    console.log('product: ' + product);
     i++;
   }
 
@@ -78,8 +91,8 @@ function getRandomFactor(number){
   var numPFactors = getRandomInt(1, pFactors.length);
   var randomFactor = 1;
   var currentPrimeIndex = '';
-  for (var j = 0; j <= numPFactors; j++){
-    currentPrimeIndex = getRandomInt(0, pFactors.length - 1);
+  for (var j = 0; j < numPFactors; j++){
+    currentPrimeIndex = getRandomInt(0, pFactors.length);
     randomFactor *= pFactors[currentPrimeIndex];
     pFactors.splice(currentPrimeIndex, 1);
   }
@@ -95,6 +108,10 @@ function getDivisionProblem(answer) {
     console.log("--------answer: " + answer);
     if (answer == 0) {
         return 0 + OPS.divide + getRandomInt(1, 60);
+    }
+    if (answer == 1) {
+      var number = getRandomInt(1,60);
+      return number + OPS.divide + number;
     }
     var b = getRandomMultiple(60, answer);
     var a = b / answer;
@@ -141,7 +158,7 @@ function startClock() {
 // TESTS
 //-----------------------------------------------------------------------
 function testMultiplication() {
-    for (var i = 0; i < 10; i++) {
+    for (var i = 0; i < 60; i++) {
         console.log("---------------outer loop");
         var li = document.createElement("li");
         li.innerHTML = "[" + i + "] " + getMultiplicationProblem(i);
@@ -158,5 +175,10 @@ function testDivision() {
     }
 }
 
+function testRandomFactor() {
+  console.log('>>>Random Factor: ' + getRandomFactor(12));
+}
+
 //testDivision();
-testMultiplication();
+//testMultiplication();
+//testRandomFactor();
