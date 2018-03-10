@@ -1,5 +1,6 @@
-// This is an interpretation of a neat (but expensive!)
-// clock I saw that displays the time as math problems.
+// This is an interpretation of a neat (but expensive! 
+// That's Switch money right there!) clock I saw that 
+// displays the time as math problems.
 // -------------------------------------------------------
 // ------> https://www.thinkgeek.com/product/kjpm/ <------
 // -------------------------------------------------------
@@ -7,14 +8,6 @@
 // I would have loved something like this for my students!
 // Eventually I will build it with a Raspberry Pi setup
 // and rewrite the code in something else, like Python
-// TODO: A proper LCD font or SVG alternative. This font's
-// division and plus signs look too similar
-// Yikes, where do I start... an array 60 elements long where
-// each element is an array of answers for that index
-// (which represents a minute or hour)?
-// Manually create math problems for all 60 elements?
-// It just doesn't seem very practical, or at least,
-// not very elegant.
 
 //-----------------------------------------------------------------------
 // CONSTANTS AND VARIABLES
@@ -81,28 +74,17 @@ function getRandomFactor(number){
   var test = 0;
 
   while (product != number){
-    console.log('---------BEFORE IF');
-    console.log('current prime: ' + PRIMES[i]);
-    console.log('current prime index: ' + i);
-    console.log("prime factors: " + pFactors);
-    console.log("current factor: " + currentFactor);
-    console.log('product: ' + product);
+
     if (currentFactor % PRIMES[i] == 0){
       pFactors.push(PRIMES[i]);
       currentFactor = currentFactor / PRIMES[i];
       product *= PRIMES[i];
       i = -1;
     }
-    console.log('---------AFTER IF');
-    console.log('current prime: ' + PRIMES[i]);
-    console.log('current prime index: ' + i);
-    console.log("prime factors: " + pFactors);
-    console.log("current factor: " + currentFactor);
-    console.log('product: ' + product);
     i++;
   }
 
-  //To get random factor, multiply 2 or more prime factors together
+  //To get random factor, return 1 factor or multiply 2 or more prime factors together
   var numPFactors = getRandomInt(1, pFactors.length);
   var randomFactor = 1;
   var currentPrimeIndex = '';
@@ -120,7 +102,6 @@ function getRandomFactor(number){
 //-----------------------------------------------------------------------
 
 function getDivisionProblem(answer) {
-    console.log("--------answer: " + answer);
     if (answer == 0) {
         return 0 + OPS.divide + getRandomInt(1, 60);
     }
@@ -135,9 +116,7 @@ function getDivisionProblem(answer) {
 }
 
 function getMultiplicationProblem(answer) {
-    console.log("--------answer: " + answer);
     if (PRIMES.includes(answer)) {
-        console.log("it's a prime");
         return 1 + OPS.times + answer;
     } else if (answer == 0) {
         return 0 + OPS.times + getRandomInt(0,60);
@@ -150,8 +129,6 @@ function getMultiplicationProblem(answer) {
     var b = getRandomFactor(answer);
     var a = answer / b;
 
-    console.log("b: " + b);
-    console.log("a: " + a);
     return b + OPS.times + a;
 }
 
@@ -203,22 +180,41 @@ function getRandomProblem(answer){
 }
 
 //-----------------------------------------------------------------------
-// CLOCK FUNCTIONS, CONSTANTS AND VARIABLES
+// CLOCK FUNCTIONS, CONSTANTS AND VARIABLES              >>>>> INIT <<<<<
 //-----------------------------------------------------------------------
 
-function startClock() {
-    var time = new Date();
-    var minutes = time.getMinutes();
-    var hours = time.getHours();
-    document.getElementById("problem-hr").innerHTML = getRandomProblem(hours);
-    document.getElementById("problem-min").innerHTML = getRandomProblem(minutes);
+function getTime(){
+  var time = new Date();
+  return time;
+}
 
-    setInterval(function(){
-      if (time.getMinutes() != minutes){
-        document.getElementById("problem-hr").innerHTML = getRandomProblem(hours);
-        document.getElementById("problem-min").innerHTML = getRandomProblem(minutes);
-      }
-    }, 500);
+function setProblems(){
+  document.getElementById("problem-hr").innerHTML = getRandomProblem(getTime().getHours());
+  document.getElementById("problem-min").innerHTML = getRandomProblem(getTime().getMinutes());
+}
+
+var lastTime = getTime().getMinutes();
+function timeChanged(){
+  if ((Math.abs(getTime().getMinutes() - lastTime)) > 0){
+    console.log(lastTime);
+    console.log(getTime().getMinutes());
+    lastTime = getTime().getMinutes();
+    
+    return true;
+  }
+  else {
+    return false;
+  }
+}
+
+function startClock() {
+  setProblems();
+  setInterval(function(){
+    if (timeChanged()){
+      setProblems();
+    }
+    //console.log(getTime().getMinutes());
+  }, 500);
 }
 
 startClock();
