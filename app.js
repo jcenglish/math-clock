@@ -122,7 +122,7 @@ function getMultiplicationProblem(answer) {
         return 0 + OPS.times + getRandomInt(0,60);
       }
       else if (answer == 1){
-        var denominator = getRandomInt(0,60);
+        var denominator = getRandomInt(1,60);
         return denominator + OPS.times + formatFraction(1, denominator);
       }
 
@@ -147,6 +147,7 @@ function getAdditionProblem(answer){
   return a + OPS.plus + b;
 }
 
+//FIX: b is too big
 function getSubtractionProblem(answer){
   if (answer == 0){
     var number = getRandomInt(0,60)
@@ -196,8 +197,6 @@ function setProblems(){
 var lastTime = getTime().getMinutes();
 function timeChanged(){
   if ((Math.abs(getTime().getMinutes() - lastTime)) > 0){
-    console.log(lastTime);
-    console.log(getTime().getMinutes());
     lastTime = getTime().getMinutes();
     
     return true;
@@ -213,7 +212,6 @@ function startClock() {
     if (timeChanged()){
       setProblems();
     }
-    //console.log(getTime().getMinutes());
   }, 500);
 }
 
@@ -247,3 +245,82 @@ function testRandomFactor() {
 //testDivision();
 //testMultiplication();
 //testRandomFactor();
+
+//-----------------------------------------------------------------------
+// INTERFACE
+//-----------------------------------------------------------------------
+var app = new Vue({
+  el: '#app',
+  data: {
+    colorGreen: '#37694C',
+    menuToggled: {
+      state: true,
+      style: {
+      left: 0,
+      overflowY: 'scroll'
+    }
+    },
+    settings: {
+      clock24: true, 
+      difficulty: {
+        'Number of operations': 1,
+        'Max operand value' : 60,
+        'Min operand value' : 0 
+      },
+      operationTypes: [
+      //{'mixed': false}, //only an option if number of ops is > 1
+        {'subtraction': true},
+        {'addition': true},
+        {'multiplication': true},
+        {'division': true},
+        {'exponents': false},
+        {'radicals': false},
+        {'absolute value': false}
+      ],
+      numberSets: [
+      {'positive numbers' : true},
+      {'negative numbers' : false},
+      {'fractions' : false},
+      {'decimals' : false}
+      ],
+      inverseProp: false,
+      identityProp: false,
+      fonts: [
+        {'Pangolin': true},
+        {'Patrick Hand': false},
+        {'Quicksand': false},
+        {'PT Sans': false}
+      ],
+      //fontSize: 1,
+      styles: [
+        {
+          backgroundColor: 'black',
+          color: 'white'
+        },
+        {
+          color: 'black',
+          backgroundColor: 'white'
+        },
+        {
+          backgroundColor: '#37694C',
+          color: 'white'
+        }
+      ]
+    }
+  },
+  methods: {
+    selectFont: function(){
+
+    }
+  },
+  watch: {
+  },
+  computed: {
+
+  //   googleFonts: function(){
+  //     return 'https://fonts.googleapis.com/css?family=' 
+  //     + this.settings.fonts.join('|').replace(/\s/g, '+')
+  //     + '&text=0123456789%2b/×−÷√hoursminte';
+  // }
+}
+})

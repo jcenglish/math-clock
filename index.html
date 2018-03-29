@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset='UTF-8'name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ms. English's Math Clock</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css">
+     <link href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet">
+     <link href="https://fonts.googleapis.com/css?family=Pangolin|Patrick+Hand|Quicksand|PT+Sans&text=0123456789%2b/^−+×÷√hHoursSmintTePaglckdQ" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <link rel="stylesheet" href="app.css">
+</head>
+<body>
+
+<div id='app' v-bind:style='settings.styles[0]'>
+	<div id='menu' v-bind:style="[menuToggled.state ? menuToggled.style : '']">
+  	<h4><i class="material-icons">info</i>Information</h4>
+  	<h4><i class="material-icons">feedback</i>Feedback</h4>
+  	<h4><i class="material-icons">settings</i>Settings</h4>
+  	<h5>Clock</h5>
+<fieldset>
+  		<legend>Clock Type</legend>
+  		<input type='radio' name='clock24'><label for='clock24'>24-hour</label><br>
+  		<input type='radio' name='clock24'><label for='clock24'>12-hour</label><br>
+  		</fieldset>
+
+  		<fieldset>
+  			<legend>Font</legend>
+  			<template v-for='font in settings.fonts'>
+<input type='radio' name='fontSetting' v-bind:value="font.toString().replace(/\s/g, '')" v-bind:id="font.toString().replace(/\s/g, '')"><label v-bind:style='{fontFamily: Object.keys(font).toString()}' v-bind:for="Object.keys(font).toString().replace(/\s/g, '')">
+	{{Object.keys(font).toString()}}</label><br>
+  		</template>
+  	</fieldset>
+  	<fieldset>
+  			<legend>Font Size</legend>
+  			<template v-for='font in settings.fonts'>
+<input type='radio' name='fontSetting' v-bind:value="font.toString().replace(/\s/g, '')" v-bind:id="font.toString().replace(/\s/g, '')"><label v-bind:style='{fontFamily: Object.keys(font).toString()}' v-bind:for="Object.keys(font).toString().replace(/\s/g, '')">
+	{{Object.keys(font).toString()}}</label><br>
+  		</template>
+  	</fieldset>
+  	<fieldset>
+  		<legend>Theme</legend>
+  		<template v-for='(style, index) in settings.styles'>
+  			<input type='radio' name='style' v-bind:id="'style' + index" v-bind:value='style.backgroundColor'><label v-bind:for="'style' + index" v-bind:style='style'>{{index}}</label>
+  	</template>
+  	</fieldset>
+
+  	<h5>Math</h5>
+  	<fieldset>
+  		<legend>Operands</legend>
+  	<label>Maximum (absolute) operand value</label>
+  		<input type='number' max='100' min='12'>
+  	<label>Include Identity Properties</label>
+  	<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+<label>Include Inverse Properties</label>
+  	<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+<label>Include fractions</label>
+  	<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+<label>Include negative numbers</label>
+  	<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+<label>Include decimal numbers</label>
+  	<label class="switch">
+  <input type="checkbox">
+  <span class="slider round"></span>
+</label>
+  	</fieldset>
+  	<fieldset>
+  		<legend>Operations</legend>
+  	<label>Number of operations per problem</label>
+  	<label>Types of operations</label>
+  		<fieldset>
+  			<template v-for='(op, index) in settings.operationTypes'>
+  				<input v-if='index < 4' type='checkbox' v-bind:id="['op-' + Object.keys(op).toString().replace(/\s/g, '')]" v-bind:name="['op-' + Object.keys(op).toString().replace(/\s/g, '')]" v-bind:value="['op-' + Object.keys(op).toString().replace(/\s/g, '')]">
+  				<input v-else disabled type='checkbox' v-bind:id="['op-' + Object.keys(op).toString().replace(/\s/g, '')]" v-bind:name="['op-' + Object.keys(op).toString().replace(/\s/g, '')]" v-bind:value="['op-' + Object.keys(op).toString().replace(/\s/g, '')]"><label v-bind:for="['op-' + Object.keys(op).toString().replace(/\s/g, '')]" class='checkbox'>{{Object.keys(op).toString()}}</label><br>
+  			</label>
+  		</template>
+  		</fieldset>
+</div><!-- End Menu -->
+<button class='btn-menu' v-bind:style="[menuToggled.state ? menuToggled.style : '']" v-on:click='menuToggled.state = !menuToggled.state'><i class="material-icons">menu</i></button>
+<!-- Begin Clock -->
+  <div id='clock'>
+  	<div class='row'>
+  	<span id='problem-hr'></span>
+  </div>
+  <div class='row'>
+  	<span id='problem-min'></span>
+  </div>
+</div><!-- End Clock -->
+</div><!-- End App -->
+<script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="app.js"></script>
+</body>
+</html>
